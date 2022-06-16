@@ -94,7 +94,11 @@ func int32Ptr(i int32) *int32 { return &i }
 func createDeployment(client kubernetes.Interface) *appv1.Deployment {
 	dm := &appv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
+<<<<<<< HEAD
 			Name: "demo-deployment",
+=======
+			Name: "deployment",
+>>>>>>> afae42cf966804b3cba7cddbe931d730799c00ce
 			Labels: map[string]string{
 				"ntcu-k8s": "hw2",
 			},
@@ -115,7 +119,11 @@ func createDeployment(client kubernetes.Interface) *appv1.Deployment {
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{
 						{
+<<<<<<< HEAD
 							Name: "nginx",
+=======
+							Name:  "nginx",
+>>>>>>> afae42cf966804b3cba7cddbe931d730799c00ce
 							Image: "nginx:1.14.2",
 							Ports: []corev1.ContainerPort{
 								{
