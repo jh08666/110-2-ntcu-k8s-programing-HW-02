@@ -94,8 +94,7 @@ func int32Ptr(i int32) *int32 { return &i }
 func createDeployment(client kubernetes.Interface) *appv1.Deployment {
 	dm := &appv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
-
-			Name: "demo-deployment",
+			Name: "apple-app1",
 			Labels: map[string]string{
 				"ntcu-k8s": "hw2",
 			},
@@ -116,7 +115,7 @@ func createDeployment(client kubernetes.Interface) *appv1.Deployment {
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{
 						{
-							Name:  "nginx",
+							Name:  "nginx-container",
 							Image: "nginx:1.14.2",
 							Ports: []corev1.ContainerPort{
 								{
@@ -185,7 +184,7 @@ var portnum int32 = 80
 func createService(client kubernetes.Interface) *corev1.Service {
 	sm := &corev1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "acs108118",
+			Name: "apple-service",
 			Labels: map[string]string{
 				"ntcu-k8s": "hw2",
 			},
@@ -219,41 +218,4 @@ func createService(client kubernetes.Interface) *corev1.Service {
 	}
 	fmt.Printf("Created Deplyment %s/%s\n", sm.GetNamespace(), sm.GetName())
 	return sm
-}
-
-func createConfigMap(client kubernetes.Interface) *corev1.ConfigMap {
-	cm := &corev1.ConfigMap{Data: map[string]string{"foo": "bar"}}
-	cm.Namespace = namespace
-	cm.GenerateName = "informer-typed-simple-"
-
-	cm, err := client.
-		CoreV1().
-		ConfigMaps(namespace).
-		Create(
-			context.Background(),
-			cm,
-			metav1.CreateOptions{},
-		)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	fmt.Printf("Created ConfigMap %s/%s\n", cm.GetNamespace(), cm.GetName())
-	return cm
-}
-
-func deleteConfigMap(client kubernetes.Interface, cm *corev1.ConfigMap) {
-	err := client.
-		CoreV1().
-		ConfigMaps(cm.GetNamespace()).
-		Delete(
-			context.Background(),
-			cm.GetName(),
-			metav1.DeleteOptions{},
-		)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	fmt.Printf("Deleted ConfigMap %s/%s\n", cm.GetNamespace(), cm.GetName())
 }
