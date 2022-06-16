@@ -1,16 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-<<<<<<< HEAD
   name: demo-deployment 
-=======
-  name: demo
->>>>>>> origin/main
 spec:
   replicas: 1
   selector:
     matchLabels:
-<<<<<<< HEAD
       app : demo-deployment
   template:
     metadata:
@@ -20,16 +15,5 @@ spec:
       serviceAccountName: dm-incluster
       containers:
         - name: demo-deployment
-=======
-      app : demo
-  template:
-    metadata:
-      labels:
-        app : demo
-    spec:
-      serviceAccountName: dm-incluster
-      containers:
-        - name: demo
->>>>>>> origin/main
           image: acs108118/incluster:latest
           imagePullPolicy: IfNotPresent
