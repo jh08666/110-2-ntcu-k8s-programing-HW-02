@@ -60,21 +60,21 @@ func main() {
 	sm := createService(clientset)
 
 	go func() {
-		for{
-		read, err := clientset.
-			AppsV1().
-			Deployments(namespace).
-			Get(
-				context.Background(),
-				dm.GetName(),
-				metav1.GetOptions{},
-			)
-		if err != nil {
-			panic(err.Error())
-		}
+		for {
+			read, err := clientset.
+				AppsV1().
+				Deployments(namespace).
+				Get(
+					context.Background(),
+					dm.GetName(),
+					metav1.GetOptions{},
+				)
+			if err != nil {
+				panic(err.Error())
+			}
 
-		fmt.Printf("Read Deployment %s/%s\n", namespace, read.GetName())
-		time.Sleep(time.Second)
+			fmt.Printf("Read Deployment %s/%s\n", namespace, read.GetName())
+			time.Sleep(time.Second)
 		}
 	}()
 
@@ -94,7 +94,7 @@ func int32Ptr(i int32) *int32 { return &i }
 func createDeployment(client kubernetes.Interface) *appv1.Deployment {
 	dm := &appv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "demo-deployment",
+			Name: "demo",
 			Labels: map[string]string{
 				"ntcu-k8s": "hw2",
 			},
@@ -115,7 +115,7 @@ func createDeployment(client kubernetes.Interface) *appv1.Deployment {
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{
 						{
-							Name: "nginx",
+							Name:  "nginx",
 							Image: "nginx:1.14.2",
 							Ports: []corev1.ContainerPort{
 								{
@@ -187,8 +187,8 @@ func createService(client kubernetes.Interface) *corev1.Service {
 			Name: "acs108118",
 			Labels: map[string]string{
 				"ntcu-k8s": "hw2",
+			},
 		},
-},
 		Spec: corev1.ServiceSpec{
 			Selector: map[string]string{
 				"ntcu-k8s": "hw2",
@@ -216,6 +216,6 @@ func createService(client kubernetes.Interface) *corev1.Service {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("Created Deplyment %s/%s\n", sm.GetNamespace(), sm.GetName())
+	fmt.Printf("Created Service %s/%s\n", sm.GetNamespace(), sm.GetName())
 	return sm
 }
